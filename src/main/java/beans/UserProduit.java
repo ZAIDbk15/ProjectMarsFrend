@@ -73,3 +73,27 @@ public class UserProduit {
         this.filteredProduit = filteredProduit;
     }
 }
+/*    public void getAllProduit() {
+        try {
+            HttpGet request = new HttpGet(restResource);
+            CloseableHttpClient client = HttpClients.createDefault();
+            result = client.execute(request, new BasicHttpClientResponseHandler());
+            JSONArray jsonArray = new JSONArray(result);
+            listProduit.clear();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                Produit produit = new Produit();
+                produit.setId(jsonObject.getInt("id"));
+                produit.setDesignation(jsonObject.getString("designation"));
+                produit.setPrix(jsonObject.getFloat("prix"));
+                produit.setQuantite(jsonObject.getInt("quantite"));
+                produit.setPhoto(jsonObject.getString("photo"));
+                produit.setSdr(jsonObject.getInt("sdr"));
+                System.out.println(produit);
+                listProduit.add(produit);
+
+            }
+        } catch (Exception e) {
+            System.out.println("Erreur lors de l'execution de getAllUsers:\n" + e);
+        }
+    }*/

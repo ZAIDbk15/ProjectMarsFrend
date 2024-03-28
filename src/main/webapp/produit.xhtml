@@ -61,7 +61,8 @@
                             <h:outputText value="#{user.categorie.nom}" />
                         </p:column>
                         <p:column headerText="photo">
-                            <h:outputText value="#{user.photo}" />
+                            <p:graphicImage value="http://localhost:8080/ProjectMarsBcEnd/images/photos/#{user.photo}"
+                                            height="200" width="120"/>
                         </p:column>
                         <f:facet name="footer">
                         </f:facet>
