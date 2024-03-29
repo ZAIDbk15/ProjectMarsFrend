@@ -4,7 +4,7 @@
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui"
-        template="./index.xhtml">
+        template="./indextest.xhtml">
 
     <ui:define name="title">
         Administration : <ui:insert name="adminTitle">Gestion des Users</ui:insert>
@@ -72,5 +72,83 @@
                 </h:form>
             </p:row>
         </h:panelGrid>
+
+        <h:form id="form">
+            <p:dataGrid var="product" value="#{userProduit.listProduit}" columns="3" layout="grid"
+                    rows="12" paginator="true" id="cars"
+                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                    rowsPerPageTemplate="6,12,16">
+
+            <f:facet name="header">
+                Products for Sale
+            </f:facet>
+
+            <div class="product-grid-item card" style="margin-bottom: 0">
+                <div class="product-grid-item-top">
+                    <div>
+                        <i class="pi pi-tag product-category-icon"/>
+                        <span class="product-category">#{product.categorie.nom}</span>
+                    </div>
+                    <span class="product-badge status-#{product.inventoryStatus.name().toLowerCase()}">#{product.inventoryStatus.text}</span>
+                </div>
+                <div class="product-grid-item-content">
+                    <p:graphicImage value="http://localhost:8080/ProjectMarsBcEnd/images/photos/#{product.photo}"
+                                    height="200" width="120"/>
+                    <div class="product-name">#{product.designation}</div>
+                    <div class="product-description">#{product.designation}</div>
+                    <p:rating readonly="true" value="#{product.rating}"/>
+                </div>
+                <div class="product-grid-item-bottom">
+                    <h:outputText value="#{product.prix}" styleClass="product-price">
+                        <f:convertNumber currencySymbol="$" type="currency"/>
+                    </h:outputText>
+                    <p:commandButton
+                                     value="Add To Cart"
+                                     icon="pi pi-shopping-cart"
+                                     disabled="#{product.inventoryStatus == 'OUTOFSTOCK'}">
+                        <f:setPropertyActionListener value="#{product}"
+                                                     target="#{userProduit.selectedProduit}"/>
+                    </p:commandButton>
+                </div>
+            </div>
+            </p:dataGrid>
+
+            <p:dialog header="Product Info" widgetVar="productDialog" modal="true" showEffect="fade"
+                      hideEffect="fade"
+                      resizable="false">
+                <p:outputPanel id="productDetail" style="text-align:center;">
+                    <p:column rendered="#{not empty userProduit.selectedProduit}">
+                        <div class="product">
+                            <div class="product-grid-item card" style="margin-bottom: 0">
+                                <div class="product-grid-item-top">
+                                    <div>
+                                        <i class="pi pi-tag product-category-icon"/>
+                                        <span class="product-category">#{userProduit.selectedProduit.categorie.nom}</span>
+                                    </div>
+                                </div>
+                                <div class="product-grid-item-content">
+                                    <p:graphicImage
+                                            name="http://localhost:8080/ProjectMarsBcEnd/images/photos/#{userProduit.selectedProduit.photo}"/>
+                                    <div class="product-name">#{userProduit.selectedProduit.designation}</div>
+                                    <div class="product-description">#{userProduit.selectedProduit.quantite}</div>
+                                    <p:rating readonly="true" value="#{userProduit.selectedProduit.rating}"/>
+                                </div>
+                                <div class="product-grid-item-bottom">
+                                    <h:outputText value="#{userProduit.selectedProduit.prix}"
+                                                  styleClass="product-price">
+                                        <f:convertNumber currencySymbol="$" type="currency"/>
+                                    </h:outputText>
+                                    <p:commandButton value="Add To Cart" icon="pi pi-shopping-cart"
+                                                     disabled="#{userProduit.selectedProduit.inventoryStatus == 'OUTOFSTOCK'}">
+                                    </p:commandButton>
+                                </div>
+                            </div>
+                        </div>
+                    </p:column>
+                </p:outputPanel>
+            </p:dialog>
+
+
+        </h:form>
     </ui:define>
 </ui:composition>

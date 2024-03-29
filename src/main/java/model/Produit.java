@@ -13,9 +13,10 @@ public class Produit implements Serializable {
     private float prix;
 
     private int quantite;
-
+    private int rating;
     private int sdr;
     private String photo;
+    private InventoryStatus inventoryStatus;
 
     public String getPhoto() {
         return photo;
@@ -23,6 +24,23 @@ public class Produit implements Serializable {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public int getRating() {
+        this.rating=5;
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public InventoryStatus getInventoryStatus() {
+        return inventoryStatus;
+    }
+
+    public void setInventoryStatus(InventoryStatus inventoryStatus) {
+        this.inventoryStatus = inventoryStatus;
     }
 
     //bi-directional many-to-one association to Categorie

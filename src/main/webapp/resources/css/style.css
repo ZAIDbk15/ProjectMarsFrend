@@ -1,33 +1,102 @@
-.ui-submenu{
-    font-size: 90%!important;
-}
-.ui-menuitem{
-    font-size: 80%!important;
-}
-table.zebra tr:nth-child(odd) td {
-	background-color: #dddddd;
-}
-ui-panelgrid>*>tr,
-.ui-panelgrid .ui-panelgrid-cell {
-    border: none!important;
-}
-.ui-datatable tbody td.wrap {
-    white-space: normal;
-}
-.majMaint {
-    vertical-align: top;
+
+
+.product-item:hover {
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Change shadow on hover */
 }
 
-.lblSuivi{
-	display:block;
-	background-color: #c52827;
-	color: #eeeeee;
-	font-size: 120%;
-	width: 170px!important;
-	height: 50px!important;
+.product-grid-item-content {
+	text-align: center; /* Center-align content */
+	padding: 20px; /* Add padding */
 }
-.card{
-	background-color: #c52827;
-	color: #eeeeee;
 
+.product-grid-item-content img {
+	width: 150px; /* Make images fill the container */
+	max-height: 150px; /* Set max height for images */
+	object-fit: cover; /* Cover aspect ratio */
+	border-radius: 15px;
+}
+
+.product-grid-item-bottom {
+	text-align: center; /* Center-align buttons */
+	padding: 10px 0; /* Add padding */
+}
+
+.product-grid-item-bottom .ui-button {
+	background-color: #0166d3; /* Set button background color to blue */
+	color: #fff; /* Set button text color to white */
+	border: none; /* Remove button border */
+	margin: 5px; /* Add margin */
+	transition: background-color 0.3s ease; /* Add transition for hover effect */
+}
+.ui-datagrid .ui-datagrid-header {
+	background-color: white; /* Set background color to white */
+}
+
+.product-grid-item-bottom .ui-button:hover {
+	background-color: #0056b3; /* Change button color on hover */
+}
+.ui-paginator .ui-paginator-current, .ui-paginator .ui-paginator-rpp-options {
+	margin-left: 1em;
+	margin-right: 1em;
+	background-color: white;
+
+}
+.product-grid-item {
+
+	border-radius: 15px;
+	padding: 20px;
+	margin: 10px;
+	background-color: #fff;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Add shadow effect */
+}
+
+.product-grid-item.card:hover {
+
+	box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4); /* Change shadow on hover */
+}
+
+body .ui-datagrid .ui-paginator.ui-paginator-top {
+	background-color: #fff;
+	border-bottom: 0 none;
+	margin-bottom: 30px;
+}
+.ui-paginator.ui-paginator-bottom {
+	margin-top: 30px;
+	background-color: #fff;
+}
+.ui-widget-content {
+	border: 0px;
+	background: #fff;
+	/* color: #4f4f4f; */
+}
+.ui-widget-header {
+	border: none;
+
+}
+
+.ui-menu{
+	background-color: #ffffff !important;
+	color: #ffffff !important;
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+
+}
+.ui-widget-content a {
+	color: #ffffff;
+	text-size:50px;
+
+}
+body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link {
+	padding: 0em 1rem;
+	width: 100%;
+	border: 0 none;
+	float: none;
+	border-radius: 0;
+	transition: background-color .2s, color .2s, border-color .2s, box-shadow .2s, opacity .2s;
+}
+#layout-footer {
+	background-color: #b9b9b9;
+	color: #ffffff;
+	text-align: center;
+	text-size:25px;
 }

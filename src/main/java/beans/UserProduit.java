@@ -1,6 +1,7 @@
 package beans;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import model.Categorie;
 import model.Produit;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.BasicHttpClientResponseHandler;
@@ -9,6 +10,7 @@ import org.apache.hc.client5.http.impl.classic.HttpClients;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import java.util.ArrayList;
 import java.util.List;
 
 @ManagedBean(name = "userProduit", eager = true)
@@ -21,9 +23,12 @@ public class UserProduit {
 
     private Produit selectedProduit;
     private List<Produit> filteredProduit;
+    private List<Categorie> allCategories;
+
     public  void getAllProduit(){
 
         try {
+
             CloseableHttpClient client= HttpClients.createDefault();
             HttpGet request=new HttpGet(restResource);
             result=client.execute(request,new BasicHttpClientResponseHandler());
@@ -71,6 +76,14 @@ public class UserProduit {
 
     public void setFilteredProduit(List<Produit> filteredProduit) {
         this.filteredProduit = filteredProduit;
+    }
+
+    public List<Categorie> getAllCategories() {
+        return allCategories;
+    }
+
+    public void setAllCategories(List<Categorie> allCategories) {
+        this.allCategories = allCategories;
     }
 }
 /*    public void getAllProduit() {
