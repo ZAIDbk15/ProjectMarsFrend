@@ -12,6 +12,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.util.ArrayList;
 import java.util.List;
+import org.primefaces.PrimeFaces;
+import org.primefaces.context.PrimeRequestContext;
 
 @ManagedBean(name = "userProduit", eager = true)
 @SessionScoped
@@ -24,6 +26,7 @@ public class UserProduit {
     private Produit selectedProduit;
     private List<Produit> filteredProduit;
     private List<Categorie> allCategories;
+    private String key;
 
     public  void getAllProduit(){
 
@@ -41,7 +44,28 @@ public class UserProduit {
 
 
     }
+    public  void searchQuery(){
 
+        try {
+
+            CloseableHttpClient client= HttpClients.createDefault();
+            if (!key.equals("")){
+                HttpGet request=new HttpGet(restResource+"/keyword/"+key);
+                result=client.execute(request,new BasicHttpClientResponseHandler());
+                ObjectMapper objectMapper = new ObjectMapper();
+                listProduit = objectMapper.readValue(result, Produit[].class);
+                //PrimeRequestContext.getCurrentInstance().i("form:productsGrid");
+            }else{
+                getAllProduit();
+            }
+
+            System.out.println(listProduit.length);
+        } catch (Exception e) {
+            System.out.println("Errure lore de l'execute de getAllUsers \n"+e);
+        }
+
+
+    }
     public String getRestResource() {
         return restResource;
     }
@@ -84,6 +108,14 @@ public class UserProduit {
 
     public void setAllCategories(List<Categorie> allCategories) {
         this.allCategories = allCategories;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }
 /*    public void getAllProduit() {
