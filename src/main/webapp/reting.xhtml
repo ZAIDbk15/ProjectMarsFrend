@@ -12,17 +12,8 @@
 
    <ui:define name="contenu">
    <div  class="product-grid-item card product-item" style="margin-bottom: 0">
-      <f:metadata>
-         <f:event listener="#{userProduit.searchQuery}" type="preRenderView" />
-      </f:metadata>
-      <h:form id="formDataGrid" >
-         <p:inputText id="searchInput" value="#{userProduit.key}" placeholder="Search..."
-                      style="margin-bottom: 10px;" />
-         <p:commandButton value="Search" action="#{userProduit.searchQuery}"
-                          update="formDataGrid" />
-
-
-         <p:dataGrid   id="tblCategs"  var="product"  value="#{userProduit.listProduit}" columns="4" layout="grid"   rows="12" paginator="true"
+      <h:form id="form" action="#{userProduit.getAllProduit()}">
+         <p:dataGrid var="product"  value="#{userProduit.listProduit}" columns="4" layout="grid" id="cars"  rows="12" paginator="true"
                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                      rowsPerPageTemplate="8,12,{ShowAll|'ShowAll'}"
                      filteredValue="#{userProduit.filteredProduit}"

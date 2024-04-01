@@ -22,10 +22,6 @@
                 </p:row>
 
                 <h:form id="FormTableCategs" action="#{userProduit.getAllProduit()}">
-                    <p:inputText id="searchInput" value="#{userProduit.key}" placeholder="Search..."
-                                 style="margin-bottom: 10px;" />
-                    <p:commandButton value="Search" action="#{userProduit.searchQuery}"
-                                     update="tblCategs" />
                     <p:growl id="growl" showDetail="true" />
                     <p:dataTable id="tblCategs" var="user" value="#{userProduit.listProduit}"
                                  resizableColumns="true"
