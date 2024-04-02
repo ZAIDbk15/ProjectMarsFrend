@@ -1,4 +1,3 @@
-<!--
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <HTML
@@ -17,33 +16,39 @@
         </f:facet>
     </h:head>
     <h:body>
-        <p:layout fullPage="true">
-            <p:layoutUnit position="north" size="85" resizable="true"
-                          closable="true" collapsible="true" >
+        <div class="p-grid p-dir-col">
+            <div class="p-col">
+                <div class="box">
                     <h:form >
                         <p:menubar id="menu-bar">
-                            <p:menuitem value="NTT DATA STORE" height="100" style="float: left; margin-right: 10px;"/>
-                            <p:menuitem value="Home" url="./indextest.jsf"/>
+                            <p:menuitem value="NTT DATA STORE" height="100" style="float: left; margin-right: 100px; margin-top: 15px;"/>
+                            <p:menuitem value="Home" url="./ret.jsf" style=" margin-top: 0px; color: #0056b3"/>
                             <p:menuitem value="Produit" url="./produit.jsf"/>
                             <p:menuitem value="categore" url="./reting.jsf"/>
                         </p:menubar>
+
                     </h:form>
 
-            </p:layoutUnit>
+                </div>
+            </div>
+            <div class="p-col">
+                <div class="box">
+                    <ui:insert name="contenu">
+                        Contenu Principal en Foncion de l'opération choisie<br />
+                    </ui:insert>
+                </div>
+            </div>
 
-            <p:layoutUnit position="south" size="50" closable="true"
-                          collapsible="true">
-                Footer : Ici CopyRight et coordonnées
-                <h:graphicImage name="img/logo.png" height="50" />
-            </p:layoutUnit>
-            <p:layoutUnit position="center" resizable="true" size="1200"
-                          minSize="800" maxSize="1400">
-                <ui:insert name="contenu">
-                    Contenu Principal en Foncion de l'opération choisie<br />
-                </ui:insert>
-            </p:layoutUnit>
-        </p:layout>
+            <div class="p-col" id="layout-footer">
+                <div class="box">
+                    Ntt Data Store
+                    <h:graphicImage name="img/logo.png" height="50" />
+
+                </div>
+            </div>
+        </div>
+
     </h:body>
 </f:view>
 
-</HTML>-->
+</HTML>

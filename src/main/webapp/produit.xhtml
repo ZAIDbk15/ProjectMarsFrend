@@ -9,7 +9,9 @@
     <ui:define name="title">
         Administration : <ui:insert name="adminTitle">Gestion des Users</ui:insert>
     </ui:define>
-
+    <f:metadata>
+        <f:event listener="#{userProduit.searchQuery}" type="preRenderView" />
+    </f:metadata>
     <ui:define name="contenu">
         <h:panelGrid>
             <p:row>
