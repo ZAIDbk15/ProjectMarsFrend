@@ -4,153 +4,98 @@
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui"
-        template="./indextest.xhtml">
+        template="./index.xhtml">
 
     <ui:define name="title">
-        Administration : <ui:insert name="adminTitle">Gestion des Users</ui:insert>
+        Administration : <ui:insert name="adminTitle">Produits</ui:insert>
     </ui:define>
-    <f:metadata>
-        <f:event listener="#{userProduit.searchQuery}" type="preRenderView" />
-    </f:metadata>
+
     <ui:define name="contenu">
-        <h:panelGrid>
-            <p:row>
-                <p:row id="rowallUsers">
-                    <h:form id="fromOneUser">
+        <div  class="product-grid-item card product-item" style="margin-bottom: 0">
 
-                        <h:commandButton value="get all users" action="#{userProduit.getAllProduit()}"/>
-                    </h:form>
+            <h:form id="form" >
+                <p:inputText id="searchInput" value="#{userProduit.key}" placeholder="Search..."
+                             style="margin-bottom: 10px;" />
+                <p:commandButton value="Search" action="#{userProduit.searchQuery}"
+                                 update="@form" />
+                <f:metadata >
+                    <f:event listener="#{userProduit.searchQuery}"  type="preRenderView" />
+                </f:metadata>
 
-                </p:row>
+                <p:dataGrid   id="productsGrid" var="product"  value="#{userProduit.listProduit}" columns="4" layout="grid"   rows="12" paginator="true"
+                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                              rowsPerPageTemplate="8,12,{ShowAll|'ShowAll'}"
+                              filteredValue="#{userProduit.filteredProduit}"
+                >
 
-                <h:form id="FormTableCategs" action="#{userProduit.getAllProduit()}">
-                    <p:growl id="growl" showDetail="true" />
-                    <p:dataTable id="tblCategs" var="user" value="#{userProduit.listProduit}"
-                                 resizableColumns="true"
-                                 editable="true"
-                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-                                 paginator="true" rows="5" style="margin-bottom:20px"
-                                 selection="#{userProduit.selectedProduit}" rowKey="#{user.id}"
-                                 emptyMessage="Aucune Catégorie enregistrée"
-                                 filteredValue="#{userProduit.filteredProduit}"
-                                 widgetVar="categsTable">
-                        <f:facet name="{Exporters}">
-                            <h:commandLink>
-                                <p:graphicImage name="img/excel.png" width="24" />
-                                <p:dataExporter type="xls" target="tblCategs" fileName="Catégories" />
-                            </h:commandLink>
-
-                            <h:commandLink>
-                                <p:graphicImage name="img/pdf.png" width="24" />
-                                <p:dataExporter type="pdf" target="tblCategs" fileName="Catégories" />
-                            </h:commandLink>
-                        </f:facet>
-                        <f:facet name="header">Liste des Catégories</f:facet>
-                        <p:column selectionMode="single"
-                                  style="width:16px;text-align: center" />
-                        <p:column headerText="ID">
-                            <h:outputText value="#{user.id}" />
-                        </p:column>
-                        <p:column headerText="designation"
-                                  filterBy="#{user.designation}"
-                                  filterMatchMode="contains">
-                            <h:outputText value="#{user.designation}" />
-                        </p:column>
-                        <p:column headerText="prix">
-                            <h:outputText value="#{user.prix}" />
-                        </p:column>
-                        <p:column headerText="prix">
-                            <h:outputText value="#{user.categorie.nom}" />
-                        </p:column>
-                        <p:column headerText="photo">
-                            <p:graphicImage value="http://localhost:8080/ProjectMarsBcEnd/images/photos/#{user.photo}"
+                    <f:facet name="header">
+                        Products list
+                    </f:facet>
+                    <div class="product-grid-item card" style="margin-bottom: 0">
+                        <div class="product-grid-item-top">
+                            <div>
+                                <i class="pi pi-tag product-category-icon"/>
+                                <span class="product-category">#{product.categorie.nom}</span>
+                            </div>
+                            <span class="product-badge status-#{product.inventoryStatus.name().toLowerCase()}">#{product.inventoryStatus.text}</span>
+                        </div>
+                        <div class="product-grid-item-content">
+                            <p:graphicImage value="http://localhost:8080/ProjectMarsBcEnd/images/photos/#{product.photo}"
                                             height="200" width="120"/>
-                        </p:column>
-                        <f:facet name="footer">
-                        </f:facet>
-                        <p:ajax event="rowSelect"/>
-                        <p:ajax event="rowUnselect"/>
-                    </p:dataTable>
-                </h:form>
-            </p:row>
-        </h:panelGrid>
-
-        <h:form id="form">
-            <p:dataGrid var="product" value="#{userProduit.listProduit}" columns="3" layout="grid"
-                    rows="12" paginator="true" id="cars"
-                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                    rowsPerPageTemplate="6,12,16">
-
-            <f:facet name="header">
-                Products for Sale
-            </f:facet>
-
-            <div class="product-grid-item card" style="margin-bottom: 0">
-                <div class="product-grid-item-top">
-                    <div>
-                        <i class="pi pi-tag product-category-icon"/>
-                        <span class="product-category">#{product.categorie.nom}</span>
+                            <div class="product-name"  style="margin-bottom: 10px">#{product.designation}</div>
+                            <div class="product-description" style="margin-bottom: 10px" >Quantite: #{product.quantite}</div>
+                            <p:rating readonly="true" value="#{product.rating}"/>
+                        </div>
+                        <div class="product-grid-item-bottom">
+                            <h:outputText value="#{product.prix}" styleClass="product-price">
+                                <f:convertNumber currencySymbol="$" type="currency"/>
+                            </h:outputText>
+                            <p:commandButton
+                                    value="Add To Cart"
+                                    icon="pi pi-shopping-cart"
+                                    disabled="#{product.inventoryStatus == 'OUTOFSTOCK'}">
+                                <f:setPropertyActionListener value="#{product}"
+                                                             target="#{userProduit.selectedProduit}"/>
+                            </p:commandButton>
+                        </div>
                     </div>
-                    <span class="product-badge status-#{product.inventoryStatus.name().toLowerCase()}">#{product.inventoryStatus.text}</span>
-                </div>
-                <div class="product-grid-item-content">
-                    <p:graphicImage value="http://localhost:8080/ProjectMarsBcEnd/images/photos/#{product.photo}"
-                                    height="200" width="120"/>
-                    <div class="product-name">#{product.designation}</div>
-                    <div class="product-description">#{product.designation}</div>
-                    <p:rating readonly="true" value="#{product.rating}"/>
-                </div>
-                <div class="product-grid-item-bottom">
-                    <h:outputText value="#{product.prix}" styleClass="product-price">
-                        <f:convertNumber currencySymbol="$" type="currency"/>
-                    </h:outputText>
-                    <p:commandButton
-                                     value="Add To Cart"
-                                     icon="pi pi-shopping-cart"
-                                     disabled="#{product.inventoryStatus == 'OUTOFSTOCK'}">
-                        <f:setPropertyActionListener value="#{product}"
-                                                     target="#{userProduit.selectedProduit}"/>
-                    </p:commandButton>
-                </div>
-            </div>
-            </p:dataGrid>
+                </p:dataGrid>
 
-            <p:dialog header="Product Info" widgetVar="productDialog" modal="true" showEffect="fade"
-                      hideEffect="fade"
-                      resizable="false">
-                <p:outputPanel id="productDetail" style="text-align:center;">
-                    <p:column rendered="#{not empty userProduit.selectedProduit}">
-                        <div class="product">
-                            <div class="product-grid-item card" style="margin-bottom: 0">
-                                <div class="product-grid-item-top">
-                                    <div>
-                                        <i class="pi pi-tag product-category-icon"/>
-                                        <span class="product-category">#{userProduit.selectedProduit.categorie.nom}</span>
+                <p:dialog header="Product Info" widgetVar="productDialog" modal="true" showEffect="fade"
+                          hideEffect="fade"
+                          resizable="false">
+                    <p:outputPanel id="productDetail" style="text-align:center;">
+                        <p:column rendered="#{not empty userProduit.selectedProduit}">
+                            <div class="product">
+                                <div class="product-grid-item card" style="margin-bottom: 0">
+                                    <div class="product-grid-item-top">
+                                        <div>
+                                            <i class="pi pi-tag product-category-icon"/>
+                                            <span class="product-category">#{userProduit.selectedProduit.categorie.nom}</span>
+                                        </div>
+                                    </div>
+                                    <div class="product-grid-item-content">
+                                        <p:graphicImage
+                                                name="http://localhost:8080/ProjectMarsBcEnd/images/photos/#{userProduit.selectedProduit.photo}"/>
+                                        <div class="product-name">#{userProduit.selectedProduit.designation}</div>
+                                        <div class="product-description">#{userProduit.selectedProduit.quantite}</div>
+                                        <p:rating readonly="true" value="#{userProduit.selectedProduit.rating}"/>
+                                    </div>
+                                    <div class="product-grid-item-bottom">
+                                        <h:outputText value="#{userProduit.selectedProduit.prix}"
+                                                      styleClass="product-price">
+                                            <f:convertNumber currencySymbol="$" type="currency"/>
+                                        </h:outputText>
+                                        <p:commandButton value="Add To Cart" icon="pi pi-shopping-cart"
+                                                         disabled="#{userProduit.selectedProduit.inventoryStatus == 'OUTOFSTOCK'}">
+                                        </p:commandButton>
                                     </div>
                                 </div>
-                                <div class="product-grid-item-content">
-                                    <p:graphicImage
-                                            name="http://localhost:8080/ProjectMarsBcEnd/images/photos/#{userProduit.selectedProduit.photo}"/>
-                                    <div class="product-name">#{userProduit.selectedProduit.designation}</div>
-                                    <div class="product-description">#{userProduit.selectedProduit.quantite}</div>
-                                    <p:rating readonly="true" value="#{userProduit.selectedProduit.rating}"/>
-                                </div>
-                                <div class="product-grid-item-bottom">
-                                    <h:outputText value="#{userProduit.selectedProduit.prix}"
-                                                  styleClass="product-price">
-                                        <f:convertNumber currencySymbol="$" type="currency"/>
-                                    </h:outputText>
-                                    <p:commandButton value="Add To Cart" icon="pi pi-shopping-cart"
-                                                     disabled="#{userProduit.selectedProduit.inventoryStatus == 'OUTOFSTOCK'}">
-                                    </p:commandButton>
-                                </div>
                             </div>
-                        </div>
-                    </p:column>
-                </p:outputPanel>
-            </p:dialog>
-
-
-        </h:form>
+                        </p:column>
+                    </p:outputPanel>
+                </p:dialog>
+            </h:form>
+        </div>
     </ui:define>
 </ui:composition>
